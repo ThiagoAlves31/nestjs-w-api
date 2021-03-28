@@ -20,14 +20,11 @@ export class ArtificialHot extends BaseEntity {
     author: string;
 
     @Column()
-    ups_count: number;
+    ups: number;
 
     @Column()
     num_comments: number;
 
     @CreateDateColumn()
-    createdAt: Timestamp;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
+    createdAt: Date;
 }

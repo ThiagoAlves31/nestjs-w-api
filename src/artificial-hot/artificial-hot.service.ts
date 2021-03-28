@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateArtificialHotDto } from './dto/create-artificial-hot.dto';
 import { ArtificialHotRepository } from './repository/artificial-hot.repository'
 import { ArtificialHot } from './entities/artificial-hot.entity'
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import axios from 'axios';
-import { timeLog, timeStamp } from 'console';
+import { FilterOneArtificialHotDto } from './dto/create-artificial-hot.filterOne.dto';
+import { FilterTwoArtificialHotDto } from './dto/create-artificial-hot.filterTwo.dto';
 
 @Injectable()
 export class ArtificialHotService {
@@ -32,6 +33,7 @@ export class ArtificialHotService {
   
         await this.create({ title, author, ups_count, num_comments })
       });
+      
       console.log(Date())
       if(intervalOn == 0) {
         const intervalInitial = this.schedulerRegistry.getInterval('inittial');
@@ -55,8 +57,31 @@ export class ArtificialHotService {
     const newData = this.artificialHotRepository.create()
     newData.author = author
     newData.title = title
-    newData.ups_count = ups_count
+    newData.ups = ups_count
     newData.num_comments = num_comments
     newData.save()
+  }
+
+  async filterOne(filter: FilterOneArtificialHotDto): Promise<ArtificialHot[]> {
+    
+    const { initDate, finalDate, order} = filter
+    const query = this.artificialHotRepository.createQueryBuilder('hot');
+    query.where(
+      "substring(hot.createdAt,1,10) BETWEEN :initDate AND :finalDate",
+      { initDate, finalDate }
+    );
+    query.orderBy(`hot.${order}`)
+    const data = await query.execute();
+    return data;
+  }
+
+  async filterTwo(filter: FilterTwoArtificialHotDto): Promise<ArtificialHot[]> {
+    
+    const { order } = filter
+    const query = this.artificialHotRepository.createQueryBuilder('hot');
+    query.orderBy(`hot.${order}`, 'DESC',)
+
+    const data = await query.execute();
+    return data;
   }
 }
