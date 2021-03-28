@@ -4,6 +4,7 @@ import { CreateArtificialHotDto } from './dto/create-artificial-hot.dto';
 import { ArtificialHotRepository } from './repository/artificial-hot.repository'
 import { ArtificialHot } from './entities/artificial-hot.entity'
 import { Repository } from 'typeorm';
+import { Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class ArtificialHotService {
@@ -12,6 +13,11 @@ export class ArtificialHotService {
     @InjectRepository(ArtificialHot)
     private artificialHotRepository: Repository<ArtificialHot>,
   ) {}
+
+  @Interval(4000)
+  async onModuleInit(): Promise<void> {
+    console.log('Voiu rodar de tanto em tanto tempo')
+  }
   
   async create(createArtificialHotDto: CreateArtificialHotDto) {
     const { title, author, ups_count, num_comments } = createArtificialHotDto
