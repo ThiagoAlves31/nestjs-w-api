@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateArtificialHotDto } from './dto/create-artificial-hot.dto';
 import { ArtificialHotRepository } from './repository/artificial-hot.repository'
 import { ArtificialHot } from './entities/artificial-hot.entity'
-import { LessThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import axios from 'axios';
 import { FilterOneArtificialHotDto } from './dto/create-artificial-hot.filterOne.dto';
@@ -45,7 +45,7 @@ export class ArtificialHotService {
       }
     };
 
-    let interval = setInterval(callback,3000);
+    let interval = setInterval(callback,5000);
     this.schedulerRegistry.addInterval('inittial', interval);
       
   }

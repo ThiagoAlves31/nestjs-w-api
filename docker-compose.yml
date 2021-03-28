@@ -1,23 +1,39 @@
 version: '3.8'
 services:
-  db_api:
-    image: mysql:8.0.14
-    ports: 
-      - 3306:3306
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: nestjs_api
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
+    nestjs:
+      container_name: nestjs_api
+      image: nestjs-api
+      build:
+          context: .
+      command: npm run start:dev
+      ports:
+          - 3000:3000
+          - 9229:9229
+      volumes:
+          - .:/usr/src/app
+          - /usr/src/app/node_modules
+      restart: always
+      depends_on:
+          - db_api
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    db_api:
+      image: mysql:8.0.14
+      container_name: db_api
+      ports: 
+        - 3306:3306
+      volumes:
+        - db_data:/var/lib/mysql
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: admin
+        MYSQL_DATABASE: nestjs_api
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: admin
 
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - 8080:8080
 volumes:
   db_data: {}
