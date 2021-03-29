@@ -34,7 +34,7 @@ export class ArtificialHotService {
         await this.create({ title, author, ups_count, num_comments })
       });
       
-      console.log(Date())
+      console.log('Data update:',Date())
       if(intervalOn == 0) {
         const intervalInitial = this.schedulerRegistry.getInterval('inittial');
         clearInterval(intervalInitial);
@@ -70,7 +70,7 @@ export class ArtificialHotService {
       "substring(hot.createdAt,1,10) BETWEEN :initDate AND :finalDate",
       { initDate, finalDate }
     );
-    query.orderBy(`hot.${order}`)
+    query.orderBy(`hot.${order}`, "DESC")
     const data = await query.execute();
     return data;
   }
