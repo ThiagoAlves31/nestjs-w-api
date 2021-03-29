@@ -15,16 +15,18 @@ Entre no diretório do projeto:
   
 Modifique o arquivo .env.example para .env:
   cp .env.example .env
+
+Configurar o CRON dentro do .env, por padrão está para rodar todo dia às 16:30
+
+Verificar também se não terá conflito de portas com o seu ambiente atual,
+por exemplo, o NestJs está rodando na 3000 e o DB na 33060
 ```
 #### Iniciar container:
 
 ```
 Iniciando os containers do projeto:
   docker-compose up -d --build
-
-Após iniciar o projeto o primeiro update dos dados será executado, o tempo de atualização 
-poderá ser configurado no arquivo .env na variável de ambiente TIME_MILLISECONDS.
-
+  
 Os dados no db poderá ser visualizado utilizando o link http://localhost:8080/
 devendo escolher:
   Sistema: Mysql
