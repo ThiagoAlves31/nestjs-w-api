@@ -37,6 +37,10 @@ devendo escolher:
 ```
 ### Utilizando API
 ```
+Utilizado para visualizar a hora do sistema e a configuração do CRON
+
+GET - http://localhost:3000/artificial-hot/setup
+
 Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de ups
 
 GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/ups
