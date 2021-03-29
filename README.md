@@ -8,3 +8,14 @@ Pré-requisitos:
 #### Para iniciar o projeto siga os passos abaixo:
 ```
 git clone https://github.com/ThiagoAlves31/nestjs-w-api.git
+
+```
+cd nestjs-w-api
+
+```
+cp .env.example .env
+```
+#### Iniciar container:
+
+```
+docker-compose up -d --build 
