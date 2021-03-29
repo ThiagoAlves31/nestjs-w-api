@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateArtificialHotDto } from './dto/create-artificial-hot.dto';
-import { ArtificialHotRepository } from './repository/artificial-hot.repository'
 import { ArtificialHot } from './entities/artificial-hot.entity'
 import { Repository } from 'typeorm';
-import { SchedulerRegistry } from '@nestjs/schedule';
+import { Cron, SchedulerRegistry } from '@nestjs/schedule';
 import axios from 'axios';
 import { FilterOneArtificialHotDto } from './dto/create-artificial-hot.filterOne.dto';
 import { FilterTwoArtificialHotDto } from './dto/create-artificial-hot.filterTwo.dto';
@@ -14,13 +13,12 @@ export class ArtificialHotService {
   constructor(
     @InjectRepository(ArtificialHot)
     private artificialHotRepository: Repository<ArtificialHot>,
-    private schedulerRegistry: SchedulerRegistry,
   ){}
+  
+  @Cron(process.env.CRON)
+  async cronModule() {
 
-  async onModuleInit() {
-    let intervalOn = 0
-
-    const callback = async () => {
+      console.log('Data update:',Date())
       const result = await axios.get(process.env.LINK_ARTIFICIAL_HOT)
       const children = result.data.data.children
       
@@ -33,21 +31,6 @@ export class ArtificialHotService {
   
         await this.create({ title, author, ups_count, num_comments })
       });
-      
-      console.log('Data update:',Date())
-      if(intervalOn == 0) {
-        const intervalInitial = this.schedulerRegistry.getInterval('inittial');
-        clearInterval(intervalInitial);
-        
-        let interval = setInterval(callback,parseInt(process.env.TIME_MILLISECONDS));
-        this.schedulerRegistry.addInterval('timeGetNewArtificialHot', interval);
-        intervalOn = 1
-      }
-    };
-
-    let interval = setInterval(callback,5000);
-    this.schedulerRegistry.addInterval('inittial', interval);
-      
   }
   
   async create(createArtificialHotDto: CreateArtificialHotDto) {
@@ -66,10 +49,11 @@ export class ArtificialHotService {
     
     const { initDate, finalDate, order} = filter
     const query = this.artificialHotRepository.createQueryBuilder('hot');
-    query.where(
-      "substring(hot.createdAt,1,10) BETWEEN :initDate AND :finalDate",
+    
+    query.where("substring(hot.createdAt,1,10) BETWEEN :initDate AND :finalDate",
       { initDate, finalDate }
     );
+    
     query.orderBy(`hot.${order}`, "DESC")
     const data = await query.execute();
     return data;
