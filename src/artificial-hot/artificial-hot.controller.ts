@@ -7,6 +7,14 @@ import { FilterTwoArtificialHotDto } from './dto/create-artificial-hot.filterTwo
 export class ArtificialHotController {
   constructor(private readonly artificialHotService: ArtificialHotService) {}
 
+  @Get('setup')
+  async currentHour(): Promise<any> {
+    return {
+      now: Date(),
+      cron: process.env.CRON
+    }
+  }
+
   @Get(':initDate/:finalDate/:order')
   async findFilterOne(@Param() filter: FilterOneArtificialHotDto): Promise<any> {
     return await this.artificialHotService.filterOne(filter);
