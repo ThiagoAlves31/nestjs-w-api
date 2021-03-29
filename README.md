@@ -19,7 +19,7 @@ Modifique o arquivo .env.example para .env:
 Configurar o CRON dentro do .env, por padrão está para rodar todo dia às 16:30
 
 Verificar também se não terá conflito de portas com o seu ambiente atual,
-por exemplo, o NestJs está rodando na 3000 e o DB na 33060
+por exemplo, o NestJs está rodando na 3000 e o DB na 3306
 ```
 #### Iniciar container:
 
