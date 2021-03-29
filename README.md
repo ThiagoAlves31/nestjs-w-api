@@ -19,7 +19,7 @@ Modifique o arquivo .env.example para .env:
 #### Iniciar container:
 
 ```
-Inicia os containers do projeto:
+Iniciando os containers do projeto:
   docker-compose up -d --build
 
 Após iniciar o projeto o primeiro update dos dados será executado, o tempo de atualização 
@@ -36,14 +36,18 @@ devendo escolher:
 ### Utilizando API
 ```
 Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de ups
-  GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/ups
+
+GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/ups
   
 Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de comentários
-  GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/num_comments 
+
+GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/num_comments 
 
 Pegando todos os dados e ordenando por numero de ups
-  GET - http://localhost:3000/artificial-hot/ups
+
+GET - http://localhost:3000/artificial-hot/ups
   
 Pegando todos os dados e ordenando por numero de comentários
-  GET - http://localhost:3000/artificial-hot/num_comments
+
+GET - http://localhost:3000/artificial-hot/num_comments
 ```
