@@ -35,8 +35,15 @@ devendo escolher:
 ```
 ### Utilizando API
 ```
-GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/ups          - Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de ups
-GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/num_comments - Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de ups
-GET - http://localhost:3000/artificial-hot/ups          - Pegando todos os dados e ordenando por numero de ups
-GET - http://localhost:3000/artificial-hot/num_comments - Pegando todos os dados e ordenando por numero de comentários
+Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de ups
+  GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/ups
+  
+Filtrando por range de data('yyyy-mm-dd') e ordenando por numero de comentários
+  GET - http://localhost:3000/artificial-hot/2021-03-28/2021-03-29/num_comments 
+
+Pegando todos os dados e ordenando por numero de ups
+  GET - http://localhost:3000/artificial-hot/ups
+  
+Pegando todos os dados e ordenando por numero de comentários
+  GET - http://localhost:3000/artificial-hot/num_comments
 ```
